@@ -15,7 +15,11 @@ def facebook_downloader():
     print(link)
     print(name)
     message = upload_pdf(link,name,PARENT_FOLDER_ID)
-    return render_template('drive_uploader.html',message = message)
+    if message :
+      return render_template('drive_uploader.html',message = message)
+    else: 
+      message = "Please Check the link"
+      return render_template('drive_uploader.html',message = message)
   else:
     error = 'Enter both link and name'
     return render_template('drive_uploader.html',message = error)
