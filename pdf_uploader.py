@@ -25,8 +25,7 @@ def authenticate():
     creds = service_account.Credentials.from_service_account_file('service_account.json', scopes=SCOPES)
     return creds
 
-def upload_pdf(url,name,folder_id):
-    extention = get_file_extension(url)
+def upload_pdf(url,name,folder_id,extention):
     file_metadata = None
     media = None
     creds = authenticate()
@@ -61,24 +60,24 @@ def upload_pdf(url,name,folder_id):
 
 
 
-def get_file_extension(url):
-    try:
-        response = requests.head(url)
-        response.raise_for_status()  # Raise an exception for bad responses (4xx and 5xx)
+# def get_file_extension(url):
+#     try:
+#         response = requests.head(url)
+#         response.raise_for_status()  # Raise an exception for bad responses (4xx and 5xx)
 
-        # Check if the server provided a Content-Type header
-        content_type = response.headers.get('Content-Type')
-        if content_type:
-            # Extract the file extension from the Content-Type header
-            _, extension = content_type.split('/')
-            return extension
-        else:
-            print("Error: Content-Type header not found in the response.")
-            return None
+#         # Check if the server provided a Content-Type header
+#         content_type = response.headers.get('Content-Type')
+#         if content_type:
+#             # Extract the file extension from the Content-Type header
+#             _, extension = content_type.split('/')
+#             return extension
+#         else:
+#             print("Error: Content-Type header not found in the response.")
+#             return None
 
-    except requests.exceptions.RequestException as e:
-        print(f"Error: {e}")
-        return None
+#     except requests.exceptions.RequestException as e:
+#         print(f"Error: {e}")
+#         return None
 
 
 # upload_pdf(url,NAME,PARENT_FOLDER_ID)

@@ -10,11 +10,15 @@ app = Flask(__name__)
 def facebook_downloader():
   link = request.form.get('link',False)
   name = request.form.get('name',False)
+  extension = request.form.get('dropdown',False)
+  
+  print(extension)
   # return render_template('fb_downloader.html')
   if link and name:
     print(link)
     print(name)
-    message = upload_pdf(link,name,PARENT_FOLDER_ID)
+
+    message = upload_pdf(link,name,PARENT_FOLDER_ID,extension)
     if message :
       return render_template('drive_uploader.html',message = message)
     else: 
