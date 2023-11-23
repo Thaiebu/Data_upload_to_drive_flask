@@ -20,7 +20,7 @@ def get_content(url):
         return pdf_content
     else:
         print(response)
-        print("Failed to download file: {}".format(response.status_code))
+        return("Failed to download file: {}".format(response.status_code))
 def authenticate():
     creds = service_account.Credentials.from_service_account_file('service_account.json', scopes=SCOPES)
     return creds
