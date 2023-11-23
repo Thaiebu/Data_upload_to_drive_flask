@@ -15,7 +15,7 @@ def get_content(url):
     response = requests.get(url)
     print(response)
     if response.status_code == 200:
-        print('Getting pdf from link',response.status_code)
+        print('Getting content from link',response.status_code)
         pdf_content = response.content
         return pdf_content
     else:
@@ -40,6 +40,10 @@ def upload_pdf(url,name,folder_id):
         } 
         content = get_content(url)
         media = MediaIoBaseUpload(BytesIO(content), mimetype='image/gif')
+        file = service.files().create(
+        body=file_metadata,
+        media_body=media
+        ).execute()
         return f"{name}.gif file upladed to gif folder"
     elif extention == 'pdf':
         file_metadata = {
@@ -48,12 +52,13 @@ def upload_pdf(url,name,folder_id):
         }
         pdf_content = get_content(url)
         media = MediaIoBaseUpload(BytesIO(pdf_content), mimetype='application/pdf')
-        return f"{name}.pdg file upladed to PDF folder"
-
-    file = service.files().create(
+        file = service.files().create(
         body=file_metadata,
         media_body=media
-    ).execute()
+        ).execute()
+        return f"{name}.pdg file upladed to PDF folder"
+
+
 
 
 def get_file_extension(url):
