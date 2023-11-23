@@ -1,6 +1,5 @@
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
-from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
 from io import BytesIO
 import requests,json
@@ -28,6 +27,8 @@ def authenticate():
 
 def upload_pdf(url,name,folder_id):
     extention = get_file_extension(url)
+    file_metadata = None
+    media = None
     creds = authenticate()
     service = build('drive', 'v3', credentials=creds)
 
@@ -48,8 +49,6 @@ def upload_pdf(url,name,folder_id):
         pdf_content = get_content(url)
         media = MediaIoBaseUpload(BytesIO(pdf_content), mimetype='application/pdf')
         return f"{name}.pdg file upladed to PDF folder"
-    else:
-        pass
 
     file = service.files().create(
         body=file_metadata,
